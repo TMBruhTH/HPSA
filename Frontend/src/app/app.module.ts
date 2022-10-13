@@ -11,6 +11,7 @@ import { PropertyListComponent } from './property/property-list/property-list.co
 import { HousingService } from './services/housing.service';
 import { AddPropertyComponent } from './property/add-property/add-property.component';
 import { PropertyDetailComponent } from './property/property-detail/property-detail.component';
+import { FormsModule } from '@angular/forms';
 
 const appRoutes: Routes = [
   {path: '', component: PropertyListComponent},
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
     AppRoutingModule,
     HttpClientModule,
     RouterModule.forRoot(appRoutes),
+    FormsModule
   ],
   providers: [HousingService],
   bootstrap: [AppComponent],
