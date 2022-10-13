@@ -11,12 +11,13 @@ import { Observable } from 'rxjs';
 export class HousingService {
   constructor(private http: HttpClient) {}
 
-  gettAllProperties(): Observable<IProperty[]>{
+  gettAllProperties(SentRellParm: number): Observable<IProperty[]>{
+
     return this.http.get('data/properties.json').pipe(
       map((data: any) => {
         const propertiesArray: Array<IProperty> = [];
         for (const id in data){
-          if(data.hasOwnProperty(id)){
+          if(data.hasOwnProperty(id) && data[id].SellRent === SentRellParm){
             propertiesArray.push(data[id]);
           }
         }
