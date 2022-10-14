@@ -9,16 +9,13 @@ export class UserServiceService {
 
   addUser(user: User) {
     let users = new Array();
-
     if (localStorage.getItem('Users')) {
       var sUsers: string = '';
-
       sUsers = JSON.parse(localStorage.getItem('Users') as string);
-      users.push(sUsers);
+      users.push(user, ...sUsers);
+    } else {
+      users.push(user);
     }
-
-    users.push(user);
-
     localStorage.setItem('Users', JSON.stringify(users));
   }
 }
