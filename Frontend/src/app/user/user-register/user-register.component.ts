@@ -5,6 +5,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { User } from 'src/app/model/user';
+import { UserServiceService } from 'src/app/services/user-service.service';
 
 @Component({
   selector: 'app-user-register',
@@ -13,9 +15,13 @@ import {
 })
 export class UserRegisterComponent implements OnInit {
   registerationForm!: FormGroup;
-  userSubmitted!: boolean;
+  userSubmitted: boolean = false;
+  user!: User;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private userService: UserServiceService
+  ) {}
 
   ngOnInit(): void {
     this.createRegisterationForm();
@@ -42,6 +48,15 @@ export class UserRegisterComponent implements OnInit {
         };
   }
 
+  userData(): User {
+    return this.user = {
+      userName: this.userName.value,
+      email: this.email.value,
+      password: this.password.value,
+      mobile: this.mobile.value
+    }
+  }
+
   get userName() {
     return this.registerationForm.get('userName') as FormControl;
   }
@@ -62,7 +77,14 @@ export class UserRegisterComponent implements OnInit {
     return this.registerationForm.get('mobile') as FormControl;
   }
 
-  onSubmit() {}
+  onSubmit() {
+    this.userSubmitted = true;
+    if (this.registerationForm.valid) {
+      this.userService.addUser(this.userData());
+      this.registerationForm.reset();
+      this.userSubmitted = false;
+    }
+  }
 
   onReset() {}
 }
